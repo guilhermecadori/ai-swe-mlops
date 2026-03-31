@@ -1,0 +1,35 @@
+stages:
+  prepare:
+    cmd: python src/preprocess.py
+    deps:
+      - src/preprocess.py
+      - params.yaml
+    params:
+      - data.test_size
+      - data.random_state
+    outs:
+      - data/processed
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/processed
+    params:
+      - model.n_estimators
+      - model.max_depth
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - models/model.pkl
+      - data/processed
+    metrics:
+      - reports/metrics.json:
+          cache: false
+    plots:
+      - reports/confusion_matrix.png:
+          cache: false

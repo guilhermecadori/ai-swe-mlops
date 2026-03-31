@@ -1,0 +1,20 @@
+cmd: python src/preprocess.py
+deps:
+- path: params.yaml
+  hash: md5
+  md5: cee85cf267eca99470b31005ee0e2446
+  size: 86
+- path: src/preprocess.py
+  hash: md5
+  md5: 8aa8788070ec537b39ac8f5f0be4084d
+  size: 5484
+params:
+  params.yaml:
+    data.random_state: 42
+    data.test_size: 0.2
+outs:
+- path: data/processed
+  hash: md5
+  md5: 87c8841308234c09b040db3519f4d308.dir
+  size: 2966
+  nfiles: 2

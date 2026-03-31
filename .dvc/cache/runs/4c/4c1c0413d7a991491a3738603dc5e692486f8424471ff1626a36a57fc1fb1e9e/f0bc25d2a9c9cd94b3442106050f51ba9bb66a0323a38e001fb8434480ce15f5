@@ -1,0 +1,24 @@
+cmd: python src/evaluate.py
+deps:
+- path: data/processed
+  hash: md5
+  md5: 87c8841308234c09b040db3519f4d308.dir
+  size: 2966
+  nfiles: 2
+- path: models/model.pkl
+  hash: md5
+  md5: bba2e4971503edd49d63496cd2400824
+  size: 158136
+- path: src/evaluate.py
+  hash: md5
+  md5: 907ca86b6f24168cfcb59bff72909f61
+  size: 7033
+outs:
+- path: reports/confusion_matrix.png
+  hash: md5
+  md5: 5c4b4ef4e181b3c263663ba608886524
+  size: 29206
+- path: reports/metrics.json
+  hash: md5
+  md5: 426f57d4f1163f4dbcd3898757637985
+  size: 86
