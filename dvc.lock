@@ -5,7 +5,7 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: cee85cf267eca99470b31005ee0e2446
+      md5: 7557de8c5de25dc60682c0d85fdb69b5
       size: 86
     - path: src/preprocess.py
       hash: md5
@@ -35,8 +35,8 @@ stages:
       size: 6574
     params:
       params.yaml:
-        model.max_depth: 10
-        model.n_estimators: 100
+        model.max_depth: 15
+        model.n_estimators: 200
     outs:
     - path: models/model.pkl
       hash: md5
