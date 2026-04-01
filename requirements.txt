@@ -3,6 +3,9 @@ scikit-learn>=1.4.0
 pandas>=2.2.0
 numpy>=1.26.0
 matplotlib>=3.8.0
+xgboost>=2.0.0
+pandera>=0.18.0
+requests>=2.31.0
 
 # MLOps
 mlflow>=2.11.0

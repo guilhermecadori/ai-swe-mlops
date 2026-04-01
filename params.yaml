@@ -1,6 +1,16 @@
 model:
+  model_type: random_forest   # random_forest | xgboost
   n_estimators: 200
   max_depth: 15
+  random_state: 42
+
+xgboost:
+  n_estimators: 200
+  max_depth: 6
+  learning_rate: 0.1
+  subsample: 0.8
+  colsample_bytree: 0.8
+  random_state: 42
 
 data:
   test_size: 0.2

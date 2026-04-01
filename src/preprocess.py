@@ -9,13 +9,13 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
-from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 logger = logging.getLogger(__name__)
 
 PARAMS_FILE = Path("params.yaml")
+RAW_FILE = Path("data/raw/iris.csv")
 PROCESSED_DIR = Path("data/processed")
 FEATURE_NAMES = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
 TARGET_COL = "target"
@@ -34,15 +34,23 @@ def load_params(path: Path = PARAMS_FILE) -> dict:
         return yaml.safe_load(f)
 
 
-def load_iris_dataframe() -> pd.DataFrame:
-    """Load the Iris dataset as a tidy DataFrame.
+def load_iris_dataframe(raw_file: Path = RAW_FILE) -> pd.DataFrame:
+    """Load the validated Iris dataset from data/raw/iris.csv.
+
+    Args:
+        raw_file: Path to the CSV produced by validate.py.
 
     Returns:
         DataFrame with feature columns and integer target column.
+
+    Raises:
+        FileNotFoundError: If the raw file does not exist.
     """
-    iris = load_iris()
-    df = pd.DataFrame(iris.data, columns=FEATURE_NAMES)
-    df[TARGET_COL] = iris.target
+    if not raw_file.exists():
+        raise FileNotFoundError(
+            f"Raw data not found: {raw_file}. Run validate.py first."
+        )
+    df = pd.read_csv(raw_file)
     logger.info("Loaded Iris dataset: %d samples, %d features", len(df), len(FEATURE_NAMES))
     return df
 
@@ -136,6 +144,7 @@ def save_splits(
 
 
 def run(
+    raw_file: Path = RAW_FILE,
     output_dir: Path = PROCESSED_DIR,
     params_file: Path = PARAMS_FILE,
     normalize_features: bool = False,
@@ -143,6 +152,7 @@ def run(
     """End-to-end preprocessing pipeline.
 
     Args:
+        raw_file: Path to the validated CSV produced by validate.py.
         output_dir: Destination directory for processed CSVs.
         params_file: Path to params.yaml.
         normalize_features: Whether to apply StandardScaler to features.
@@ -154,7 +164,7 @@ def run(
     test_size: float = params["data"]["test_size"]
     random_state: int = params["data"]["random_state"]
 
-    df = load_iris_dataframe()
+    df = load_iris_dataframe(raw_file)
     train_df, test_df = split(df, test_size=test_size, random_state=random_state)
 
     if normalize_features:
