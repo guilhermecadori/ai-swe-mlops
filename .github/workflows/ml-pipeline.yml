@@ -62,9 +62,7 @@ jobs:
         run: pip install -e ".[dev]"
 
       - name: Configure DVC local remote
-        run: |
-          python -m dvc remote add -d localstore /tmp/dvcstore
-          python -m dvc remote modify localstore url /tmp/dvcstore
+        run: python -m dvc remote add -d -f localstore /tmp/dvcstore
 
       - name: Reproduce DVC pipeline
         run: python -m dvc repro
